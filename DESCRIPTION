@@ -15,10 +15,9 @@ Depends: R (>= 3.5.0),
   tibble,
   compositions,
   glue,
-  paletteer
-Suggests:
+  paletteer,
   Seurat
-License: BSD
+License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
