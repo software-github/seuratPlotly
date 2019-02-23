@@ -2,15 +2,22 @@
 % Please edit documentation in R/common_functions.R
 \name{PrepDf}
 \alias{PrepDf}
+\alias{PrepDf.seurat}
+\alias{PrepDf.Seurat}
 \title{PrepDf}
 \usage{
-PrepDf(seuratObj, reduction.use, dim.1 = 1, dim.2 = 2, dim.3 = NULL,
-  group.by)
+PrepDf(object, ...)
+
+\method{PrepDf}{seurat}(object, reduction, dim.1 = 1, dim.2 = 2,
+  dim.3 = NULL, group.by = NULL)
+
+\method{PrepDf}{Seurat}(object, reduction, dim.1 = 1, dim.2 = 2,
+  dim.3 = NULL, group.by = NULL)
 }
 \arguments{
-\item{seuratObj}{Seurat object}
+\item{object}{Seurat object}
 
-\item{reduction.use}{dimensional reduction to extract}
+\item{reduction}{dimensional reduction to extract}
 
 \item{dim.1}{Dimension one.  X-axis data.}
 
@@ -22,6 +29,8 @@ PrepDf(seuratObj, reduction.use, dim.1 = 1, dim.2 = 2, dim.3 = NULL,
 Permissible values include meta.data column names.}
 }
 \value{
+data.frame
+
 data.frame
 }
 \description{

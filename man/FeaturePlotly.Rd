@@ -4,17 +4,18 @@
 \alias{FeaturePlotly}
 \title{FeaturePlotly}
 \usage{
-FeaturePlotly(seuratObj, feature.use = NULL, do.return = TRUE,
-  pt.scale = 5, pt.shape = "circle", opacity = 1,
-  reduction.use = "tsne", dim.1 = 1, dim.2 = 2,
-  colors.use = "Reds", bins = 10, plot.height = 900,
+FeaturePlotly(object, feature = NULL, assay.use = "RNA",
+  slot.use = "data", do.return = TRUE, pt.scale = 5,
+  pt.shape = "circle", opacity = 1, reduction.use = "tsne",
+  dim.1 = 1, dim.2 = 2, colors.use = c("blue", "red"),
+  reverse.color.scale = FALSE, bins = 10, plot.height = 900,
   plot.width = 900, plot.title = FALSE, pt.info = NULL,
   legend = TRUE, legend.font.size = 12)
 }
 \arguments{
-\item{seuratObj}{Seurat object}
+\item{object}{Seurat object}
 
-\item{feature.use}{Variable to display. Currently only works with gene names}
+\item{feature}{Variable to display. Currently only works with gene names}
 
 \item{do.return}{Return the plot object instead of displaying it (default: FALSE)}
 
@@ -30,7 +31,7 @@ FeaturePlotly(seuratObj, feature.use = NULL, do.return = TRUE,
 
 \item{dim.2}{Dimension to display on the y-axis (default: 2)}
 
-\item{colors.use}{Color palette to use.  Palettes from RColorBrewer and viridis. (default: Reds)}
+\item{colors.use}{Color palette to use.  Palettes from RColorBrewer and viridis or a list of colors. (default: Reds)}
 
 \item{bins}{Number of bins to use in dividing expression levels. (default: 10)}
 
@@ -53,5 +54,5 @@ plotly object
 Create a scatterplot of a given dimensional reduction set for a Seurat object,
 coloring and sizing points by the expression level of the chosen feature.
 Requrires a Seurat object with the reduction to be used in the corresponding
-seuratObj@dr slot
+object@dr slot
 }

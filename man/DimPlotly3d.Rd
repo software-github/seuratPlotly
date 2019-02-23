@@ -4,7 +4,7 @@
 \alias{DimPlotly3d}
 \title{DimPlotly3D}
 \usage{
-DimPlotly3d(seuratObj, group.by = "ident", do.label = FALSE,
+DimPlotly3d(object, group.by = "ident", do.label = FALSE,
   label.size = 12, label.color = "000000", show.arrow = FALSE,
   do.return = FALSE, pt.size = 2, pt.shape = "circle", opacity = 1,
   reduction.use = "tsne", dim.1 = 1, dim.2 = 2, dim.3 = 3,
@@ -13,7 +13,7 @@ DimPlotly3d(seuratObj, group.by = "ident", do.label = FALSE,
   legend.font.size = 12, plot.grid = FALSE, plot.axes = FALSE)
 }
 \arguments{
-\item{seuratObj}{Seurat object}
+\item{object}{Seurat object}
 
 \item{group.by}{Variable by which to group cells. Currently only works with the current ident and column names from meta.data (default: ident)}
 
@@ -66,5 +66,5 @@ plotly object
 DimPlotly3D
 }
 \examples{
-DimPlotly3D(seuratObj, group.by = "res.0.6", do.label = TRUE, show.arrow = FALSE)
+DimPlotly3D(object, group.by = "res.0.6", do.label = TRUE, show.arrow = FALSE)
 }

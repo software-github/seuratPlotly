@@ -4,7 +4,7 @@
 \alias{DimPlotly}
 \title{Plot dimensional reduction for a Seurat object}
 \usage{
-DimPlotly(seuratObj, group.by = "ident", do.label = FALSE,
+DimPlotly(object, group.by = "ident", do.label = FALSE,
   label.size = 12, show.arrow = FALSE, label.color = "000000",
   do.return = FALSE, pt.size = 4, pt.shape = "circle",
   opacity = 0.75, reduction.use = "tsne", dim.1 = 1, dim.2 = 2,
@@ -13,7 +13,7 @@ DimPlotly(seuratObj, group.by = "ident", do.label = FALSE,
   legend = TRUE, legend.font.size = 12)
 }
 \arguments{
-\item{seuratObj}{Seurat object}
+\item{object}{Seurat object}
 
 \item{group.by}{Variable by which to group cells. Currently only works with the current ident and column names from meta.data (default: ident)}
 
@@ -58,9 +58,9 @@ plotly object
 Create a scatterplot of a given dimensional reduction set for a Seurat object,
 coloring points by the given grouping variable
 Requrires a Seurat object with the reduction to be used in the corresponding
-seuratObj@dr slot
+object@dr slot
 }
 \examples{
-seuratObj <- RunTSNE(seuratObj)
-DimPlotly(seuratObj, group.by = 'ident', pt.size = 4, opacity = 0.5, plot.title = "Test Plot", reduction.use = "tsne")
+object <- RunTSNE(object)
+DimPlotly(object, group.by = 'ident', pt.size = 4, opacity = 0.5, plot.title = "Test Plot", reduction.use = "tsne")
 }

@@ -195,6 +195,11 @@ PrepInfo.seurat <- function(object, pt.info, df) {
 # Seurat 3
 #' @rdname PrepInfo
 #' @method PrepInfo Seurat
+#' @importFrom Seurat FetchData Idents
+#' @importFrom tibble rownames_to_column
+#' @importFrom dplyr inner_join
+#' @importFrom magrittr %>% %<>%
+#' @importFrom glue glue
 #' @return data.frame
 PrepInfo.Seurat <- function(object, pt.info, df) {
   if (!is.null(pt.info)) {

@@ -2,18 +2,40 @@
 % Please edit documentation in R/common_functions.R
 \name{PrepInfo}
 \alias{PrepInfo}
+\alias{PrepInfo.seurat}
+\alias{PrepInfo.Seurat}
+\alias{GetFeatureValues.seurat}
+\alias{GetFeatureValues.Seurat}
 \title{PrepInfo}
 \usage{
-PrepInfo(seuratObj, pt.info, df)
+PrepInfo(object, ...)
+
+\method{PrepInfo}{seurat}(object, pt.info, df)
+
+\method{PrepInfo}{Seurat}(object, pt.info, df)
+
+\method{PrepInfo}{seurat}(object, df, features, assay.use = "RNA",
+  slot.use = "data")
+
+\method{PrepInfo}{Seurat}(object, df, features, assay.use = "RNA",
+  slot.use = "data")
 }
 \arguments{
-\item{seuratObj}{Seurat object to extract data from}
+\item{object}{Seurat object to extract data from}
 
 \item{pt.info}{A list of meta.data columns to add to the hoverinfo popup.}
 
 \item{df}{Plotting data frame to which to add the popup data.}
 }
 \value{
+data.frame
+
+data.frame
+
+data.frame
+
+data.frame
+
 data.frame
 }
 \description{
