@@ -20,75 +20,75 @@ PrepDf <- function(object, ...) {
   UseMethod("PrepDf")
 }
 
-# Seurat 2 objects
-#' @rdname PrepDf
-#' @importFrom Seurat GetDimReduction FetchData
-#' @method PrepDf seurat
-#' @return data.frame
-PrepDf.seurat <- function(object,
-                   reduction,
-                   dim.1 = 1,
-                   dim.2 = 2,
-                   dim.3 = NULL,
-                   group.by = NULL) {
-  df <- GetDimReduction(
-    object = object,
-    reduction.type = reduction,
-    slot = "cell.embeddings"
-  ) %>%
-    as.data.frame()
-
-  dim.code <- GetDimReduction(
-    object = object,
-    reduction.type = reduction,
-    slot = "key"
-  )
-
-  dim.axes <- colnames(
-    GetDimReduction(
-      object = object,
-      reduction.type = reduction,
-      slot = "cell.embeddings"
-    )
-  )
-
-  if (is.null(dim.3)) {
-    dim.code <- c(
-      dim.axes[[dim.1]],
-      dim.axes[[dim.2]]
-    )
-  } else {
-    dim.code <- c(
-      dim.axes[[dim.1]],
-      dim.axes[[dim.2]],
-      dim.axes[[dim.3]]
-    )
-  }
-
-  df <- df[, dim.code]
-  cell_names <- rownames(df)
-
-  column.titles <- letters[24:26]
-  colnames(df) <- column.titles[c(
-    dim.1,
-    dim.2,
-    dim.3
-  )]
-  rownames(df) <- cell_names
-
-  if (!is.null(group.by)){
-    if (group.by != "ident") {
-      df$ident <- object$group.by %>%
-        as.factor()
-    } else if (group.by == "ident"){
-      df$ident <- Idents(object) %>% as.factor()
-    }
-  }
-
-  df %<>% rownames_to_column("cell")
-
-  return(df)
-}
+#' # Seurat 2 objects
+#' #' @rdname PrepDf
+#' #' @importFrom Seurat GetDimReduction FetchData
+#' #' @method PrepDf seurat
+#' #' @return data.frame
+#' PrepDf.seurat <- function(object,
+#'                           reduction,
+#'                           dim.1 = 1,
+#'                           dim.2 = 2,
+#'                           dim.3 = NULL,
+#'                           group.by = NULL) {
+#'   df <- GetDimReduction(
+#'     object = object,
+#'     reduction.type = reduction,
+#'     slot = "cell.embeddings"
+#'   ) %>%
+#'     as.data.frame()
+#'   
+#'   dim.code <- GetDimReduction(
+#'     object = object,
+#'     reduction.type = reduction,
+#'     slot = "key"
+#'   )
+#'   
+#'   dim.axes <- colnames(
+#'     GetDimReduction(
+#'       object = object,
+#'       reduction.type = reduction,
+#'       slot = "cell.embeddings"
+#'     )
+#'   )
+#'   
+#'   if (is.null(dim.3)) {
+#'     dim.code <- c(
+#'       dim.axes[[dim.1]],
+#'       dim.axes[[dim.2]]
+#'     )
+#'   } else {
+#'     dim.code <- c(
+#'       dim.axes[[dim.1]],
+#'       dim.axes[[dim.2]],
+#'       dim.axes[[dim.3]]
+#'     )
+#'   }
+#'   
+#'   df <- df[, dim.code]
+#'   cell_names <- rownames(df)
+#'   
+#'   column.titles <- letters[24:26]
+#'   colnames(df) <- column.titles[c(
+#'     dim.1,
+#'     dim.2,
+#'     dim.3
+#'   )]
+#'   rownames(df) <- cell_names
+#'   
+#'   if (!is.null(group.by)){
+#'     if (group.by != "ident") {
+#'       df$ident <- object$group.by %>%
+#'         as.factor()
+#'     } else if (group.by == "ident"){
+#'       df$ident <- Idents(object) %>% as.factor()
+#'     }
+#'   }
+#'   
+#'   df %<>% rownames_to_column("cell")
+#'   
+#'   return(df)
+#' }
 
 # Seurat 3
 #' @rdname PrepDf
@@ -105,9 +105,9 @@ PrepDf.Seurat <- function(object,
     object = object,
     reduction = reduction) %>%
     as.data.frame()
-
+  
   dim.axes <- colnames(df)
-
+  
   if (is.null(dim.3)) {
     dim.code <- c(
       dim.axes[[dim.1]],
@@ -120,11 +120,11 @@ PrepDf.Seurat <- function(object,
       dim.axes[[dim.3]]
     )
   }
-
+  
   df <- df[, dim.code]
   cell_names <- rownames(df)
   ident <- Idents(object) %>% as.factor()
-
+  
   column.titles <- letters[24:26]
   colnames(df) <- column.titles[c(
     dim.1,
@@ -132,7 +132,7 @@ PrepDf.Seurat <- function(object,
     dim.3
   )]
   rownames(df) <- cell_names
-
+  
   if (!is.null(group.by)){
     if (group.by != "ident") {
       df$ident <- object$group.by %>%
@@ -142,7 +142,7 @@ PrepDf.Seurat <- function(object,
     }
   }
   df %<>% rownames_to_column("cell")
-
+  
   return(df)
 }
 
@@ -172,25 +172,25 @@ PrepInfo <- function(object, ...) {
 #' @rdname PrepInfo
 #' @method PrepInfo seurat
 #' @return data.frame
-PrepInfo.seurat <- function(object, pt.info, df) {
-  if (!is.null(pt.info)) {
-    meta.info <- list()
-    # for each row
-    for (i in seq(dim(df)[1])) {
-      # for each member of pt.info
-      rowinfo <- ""
-      for (j in 1:length(pt.info)) {
-        rowinfo <- glue("{rowinfo} </br> {pt.info[j]}: {object@meta.data[i, pt.info[j]]}")
-      }
-      meta.info <- c(meta.info, rowinfo)
-    }
-    meta.info <- unlist(meta.info)
-    df$meta.info <- meta.info
-  } else {
-    df$meta.info <- df$ident
-  }
-  return(df)
-}
+# PrepInfo.seurat <- function(object, pt.info, df) {
+#   if (!is.null(pt.info)) {
+#     meta.info <- list()
+#     # for each row
+#     for (i in seq(dim(df)[1])) {
+#       # for each member of pt.info
+#       rowinfo <- ""
+#       for (j in 1:length(pt.info)) {
+#         rowinfo <- glue("{rowinfo} </br> {pt.info[j]}: {object@meta.data[i, pt.info[j]]}")
+#       }
+#       meta.info <- c(meta.info, rowinfo)
+#     }
+#     meta.info <- unlist(meta.info)
+#     df$meta.info <- meta.info
+#   } else {
+#     df$meta.info <- df$ident
+#   }
+#   return(df)
+# }
 
 # Seurat 3
 #' @rdname PrepInfo
@@ -213,7 +213,7 @@ PrepInfo.Seurat <- function(object, pt.info, df) {
         } else {
           rowinfo <- glue("{rowinfo} </br> {pt.info[j]}: {feature_info[i, pt.info[j]]}")
         }
-
+        
       }
       meta.info <- c(meta.info, rowinfo)
     }
@@ -247,7 +247,7 @@ PrepInfo.Seurat <- function(object, pt.info, df) {
 #' @examples
 PrepPalette <- function(df, palette.use) {
   bins <- length(unique(df[, "ident"]))
-
+  
   if (palette.use %in% palettes_d_names$palette) {
     color.package <- palettes_d_names$package[which(palette.use == palettes_d_names$palette)]
     pal <- paletteer_d(
@@ -294,25 +294,25 @@ GetFeatureValues <- function(object, ...) {
 #' @method PrepInfo seurat
 #' @importFrom Seurat FetchData
 #' @return data.frame
-GetFeatureValues.seurat <- function(object,
-                                    df,
-                                    features,
-                                    assay.use = "RNA",
-                                    slot.use = "data") {
-  if (slot.use == "scaled.data"){
-    use.scaled <- TRUE
-    use.raw <- FALSE
-  } else if (slot.use == "counts" | slot.use == "raw.data"){
-    use.raw <- FALSE
-    use.scaled <- FALSE
-  } else {
-    use.raw <- FALSE
-    use.scaled <- FALSE
-  }
-  feature_data <- FetchData(object, vars.all = features, use.scaled = use.scaled, use.raw = use.raw) %>% rownames_to_column("cell")
-  df %<>% inner_join(feature_data, by = "cell")
-  return(df)
-}
+# GetFeatureValues.seurat <- function(object,
+#                                     df,
+#                                     features,
+#                                     assay.use = "RNA",
+#                                     slot.use = "data") {
+#   if (slot.use == "scaled.data"){
+#     use.scaled <- TRUE
+#     use.raw <- FALSE
+#   } else if (slot.use == "counts" | slot.use == "raw.data"){
+#     use.raw <- FALSE
+#     use.scaled <- FALSE
+#   } else {
+#     use.raw <- FALSE
+#     use.scaled <- FALSE
+#   }
+#   feature_data <- FetchData(object, vars.all = features, use.scaled = use.scaled, use.raw = use.raw) %>% rownames_to_column("cell")
+#   df %<>% inner_join(feature_data, by = "cell")
+#   return(df)
+# }
 
 # Seurat 3
 #' @rdname PrepInfo
